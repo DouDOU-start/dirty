@@ -1,0 +1,14 @@
+{
+  "name": "elect",
+  "version": "1.0.0",
+  "description": "",
+  "main": "public/main.js",
+  "scripts": {
+    "start": "cd my-app && npm run build && cd .. && electron ."
+  },
+  "author": "HuangEnJun",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^31.0.1"
+  }
+}
