@@ -10,5 +10,8 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^31.0.1"
+  },
+  "dependencies": {
+    "ssh2": "^1.15.0"
   }
 }
