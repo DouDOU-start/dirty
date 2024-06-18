@@ -18,5 +18,7 @@ contextBridge.exposeInMainWorld('electron', {
   sshCommand: (command) => ipcRenderer.send('ssh-command', command),
   sshDisconnect: () => ipcRenderer.send('ssh-disconnect'),
   removeSshOutputListener: (callback) => ipcRenderer.removeListener('ssh-output', callback),
-  removeSshStatusListener: (callback) => ipcRenderer.removeListener('ssh-status', callback)
+  removeSshStatusListener: (callback) => ipcRenderer.removeListener('ssh-status', callback),
+  showOpenDialog: (options) => ipcRenderer.invoke('show-open-dialog', options),
+  readFile: (filePath) => ipcRenderer.invoke('read-file', filePath),
 });
