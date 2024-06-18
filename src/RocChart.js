@@ -1,9 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Plot from 'react-plotly.js';
 import './RocChart.css';
 
 const RocChart = () => {
   const [chartData, setChartData] = useState(null);
+  const chartContainerRef = useRef(null);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
 
   const handleFileOpen = async () => {
     const result = await window.electron.showOpenDialog({
@@ -50,13 +52,37 @@ const RocChart = () => {
     setChartData(traces);
   };
 
+  useEffect(() => {
+    const adjustContainerSize = () => {
+      if (chartContainerRef.current) {
+        const containerWidth = chartContainerRef.current.clientWidth;
+        const containerHeight = chartContainerRef.current.clientHeight;
+        const width = Math.min(containerWidth, (containerHeight * 5) / 3);
+        const height = (width * 3) / 5;
+        setContainerSize({ width, height });
+      }
+    };
+
+    window.addEventListener('resize', adjustContainerSize);
+    adjustContainerSize(); // Adjust size on mount
+
+    return () => {
+      window.removeEventListener('resize', adjustContainerSize);
+    };
+  }, []);
+
+  const config = {
+    // displayModeBar: false,
+    displaylogo: false
+  };
+
   return (
     <div className="roc-chart-container">
       <h1>Bootstrap ROC Curves for Cox Regression Model</h1>
       <div className="button-container">
         <button onClick={handleFileOpen}>Open JSON File</button>
       </div>
-      <div className="chart-wrapper">
+      <div className="chart-wrapper" ref={chartContainerRef}>
         {chartData ? (
           <Plot
             data={chartData}
@@ -71,19 +97,18 @@ const RocChart = () => {
                 range: [0, 1]
               },
               autosize: true,
-              width: 1500,
-              height: 1500,
               margin: { t: 50, r: 50, b: 50, l: 50 },
               showlegend: true,
               legend: {
                 orientation: 'h',
-                x: 0,
-                y: -0.2
-              }
+                x: 1.1,
+                y: 1
+              },
+              scrollZoom: true,
             }}
             useResizeHandler
-            style={{ width: '100%', maxWidth: '1000px', height: 'auto' }}
-            config={{ responsive: true }}
+            style={{ width: `${containerSize.width}px`, height: `${containerSize.height}px` }}
+            config={config}
           />
         ) : (
           'No data loaded.'
