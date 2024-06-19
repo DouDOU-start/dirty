@@ -21,4 +21,6 @@ contextBridge.exposeInMainWorld('electron', {
   removeSshStatusListener: (callback) => ipcRenderer.removeListener('ssh-status', callback),
   showOpenDialog: (options) => ipcRenderer.invoke('show-open-dialog', options),
   readFile: (filePath) => ipcRenderer.invoke('read-file', filePath),
+  // showOpenDialog: () => ipcRenderer.invoke('showOpenDialog'),
+  // processExcel: (filePath) => ipcRenderer.invoke('processExcel', filePath),
 });

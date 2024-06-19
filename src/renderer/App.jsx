@@ -5,7 +5,7 @@ import About from './About';
 import SSHInterface from './SSHInterface';
 import RocChart from './RocChart';
 import NavTabs from './NavTabs';
-import './App.css';
+import './styles/App.css';
 
 function App() {
   useEffect(() => {

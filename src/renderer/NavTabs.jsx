@@ -24,11 +24,8 @@ export default function NavTabs() {
       case '/chart':
         setValue(1);
         break;
-      case '/terminal':
-        setValue(2);
-        break;
       case '/about':
-        setValue(3);
+        setValue(2);
         break;
       default:
         setValue(0);
@@ -52,7 +49,7 @@ export default function NavTabs() {
       >
         <LinkTab label="主页" to="/home" />
         <LinkTab label="图表" to="/chart" />
-        <LinkTab label="终端" to="/terminal" />
+        {/* <LinkTab label="终端" to="/terminal" /> */}
         <LinkTab label="关于" to="/about" />
       </Tabs>
     </Box>
