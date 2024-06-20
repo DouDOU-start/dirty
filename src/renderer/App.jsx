@@ -11,7 +11,6 @@ function App() {
   useEffect(() => {
     const resizer = document.querySelector('.resizer');
     const sidebar = document.querySelector('.sidebar');
-    const content = document.querySelector('.content');
 
     let isResizing = false;
 

@@ -26,7 +26,7 @@ async function createWindow() {
 }
 
 function initApp() {
-  // startServer_PY();
+  startServer_PY();
   createWindow();
 }
 
