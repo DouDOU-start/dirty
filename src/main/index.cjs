@@ -23,8 +23,8 @@ let loadingWindow;
 
 async function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1920,
+    height: 1080,
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       nodeIntegration: false,
@@ -43,7 +43,9 @@ async function createWindow() {
   }
 
   mainWindow.once('ready-to-show', () => {
-    loadingWindow.close();
+    if (loadingWindow && !loadingWindow.isDestroyed()) {
+      loadingWindow.close();
+    }
     mainWindow.show();
   });
 }

@@ -5,6 +5,7 @@ import './styles/RocChart.css'; // 引入 CSS 文件
 
 const RocChart = () => {
     const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         filePath: '/Users/allen/Desktop/死亡危险因素及预测模型.xlsx',
         coefDict: {
@@ -65,6 +66,7 @@ const RocChart = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const response = await axios.post('http://127.0.0.1:5001/calculate_roc', {
                 file_path: formData.filePath,
@@ -80,6 +82,7 @@ const RocChart = () => {
         } catch (error) {
             console.error("Error fetching data:", error);
         }
+        setLoading(false);
     };
 
     const linspace = (start, end, num) => {
@@ -98,6 +101,11 @@ const RocChart = () => {
 
     return (
         <div className="container">
+            {loading && (
+                <div className="loading-overlay">
+                    <div className="spinner"></div>
+                </div>
+            )}
             <div className="form-container">
                 <h1>ROC Curve</h1>
                 <form onSubmit={handleSubmit}>
@@ -169,7 +177,7 @@ const RocChart = () => {
                             ...data.roc_curves.map((curve, index) => ({
                                 x: curve.fpr,
                                 y: curve.tpr,
-                                type: 'scatter',
+                                type: 'scattergl', // 使用 WebGL 渲染
                                 mode: 'lines',
                                 marker: { color: 'grey' },
                                 opacity: 0.3,
@@ -180,7 +188,7 @@ const RocChart = () => {
                             {
                                 x: calculateMeanTpr(data.roc_curves).meanFpr,  // 平均 FPR 轴
                                 y: calculateMeanTpr(data.roc_curves).meanTpr,  // 平均 TPR 轴
-                                type: 'scatter',
+                                type: 'scattergl', // 使用 WebGL 渲染
                                 mode: 'lines',
                                 marker: { color: 'blue' },
                                 name: `Mean ROC (area = ${data.mean_auc.toFixed(2)})`
@@ -189,7 +197,7 @@ const RocChart = () => {
                             {
                                 x: [0, 1],
                                 y: [0, 1],
-                                type: 'scatter',
+                                type: 'scattergl', // 使用 WebGL 渲染
                                 mode: 'lines',
                                 line: {
                                     dash: 'dash',
