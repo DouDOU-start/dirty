@@ -1,0 +1,23 @@
+{
+  "appId": "com.example.dirty",
+  "directories": {
+    "output": "dist_electron"
+  },
+  "files": [
+    "dist/**/*",
+    "src/main/**/*",
+    "py/dist/flask_app"
+  ],
+  "win": {
+    "target": "nsis",
+    "icon": "build/icon.ico"
+  },
+  "mac": {
+    "target": "dmg",
+    "icon": "build/icon.icns"
+  },
+  "linux": {
+    "target": "AppImage",
+    "icon": "build"
+  }
+}

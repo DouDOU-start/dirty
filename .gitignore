@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 venv
-__pycache__
+dist_electron
